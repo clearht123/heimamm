@@ -1,9 +1,22 @@
+// 导入了vue
 import Vue from 'vue'
+// 导入了App.vue （项目的根组件）
 import App from './App.vue'
+// 导入了路由
 import router from './router'
+// 路由vuex
 import store from './store'
-
-Vue.config.productionTip = false
+// 导入vnt组件
+import Vant from 'vant'
+import 'vant/lib/index.css'
+// 使用Vant
+// 导入适配
+import 'amfe-flexible'
+// 导入初始化css
+import 'normalize.css'
+// 导入字体图标
+import './styles/iconfont.css'
+Vue.use(Vant)
 
 new Vue({
   router,
