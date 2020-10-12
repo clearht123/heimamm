@@ -3,7 +3,7 @@
     <!-- 头部导航 -->
     <van-nav-bar>
       <template #left>
-        <i class="iconfont iconbtn_nav_back myleft"></i>
+        <i @click="goback" class="iconfont iconbtn_nav_back myleft"></i>
       </template>
     </van-nav-bar>
     <!-- 内容区域 -->
@@ -42,8 +42,8 @@
             >《隐私协议》</span
           >
         </p>
-        <div class="loginbtn">
-          <van-button round block type="danger" native-type="submit">
+        <div class="loginBtn">
+          <van-button round block type="danger">
             确定
           </van-button>
         </div>
@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       use: {
-        mobile: '18888881112',
+        mobile: '18888881111',
         code: ''
       },
       rules: {
@@ -90,6 +90,45 @@ export default {
     }
   },
   methods: {
+    goback () {
+      // 判断路径是否有redirect参数
+      const redirect = this.$route.query._redirect
+      if (redirect) {
+        // 判断 有直接跳到find页面
+        this.$router.push('/find')
+      } else {
+        // 没有返回上一个页面
+        this.$router.go(-1)
+      }
+    },
+    async login () {
+      this.$toast.loading({
+        duration: 0 // 一直显示
+      })
+      try {
+        // 提交登录参数
+        const res = await apiGetLogin(this.use)
+        // 保存用户的token
+        localset('heima_token', res.data.jwt)
+        // 将得到用户的信息中的头像地址拼接完整
+        res.data.user.avatar = 'http://localhost:1337' + res.data.user.avatar
+        // 保存用户信息到 vuex 中
+        this.$store.commit('setUserInfo', res.data.user)
+        // 提示登录成功
+        this.$toast.success('登录成功')
+        // 判断是否是_redirect参数
+        const redirect = this.$route.query._redirect
+        if (redirect) {
+          this.$router.push(redirect)
+        } else {
+          // 跳转首页
+          this.$router.push('/my')
+        }
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async getCode () {
       // 判断是否处于倒计时
       if (this.isback) {
@@ -128,28 +167,6 @@ export default {
         console.log(res)
         // 打印校验的信息
         this.$toast.fail(res.message)
-      }
-    },
-    async login () {
-      this.$toast.loading({
-        duration: 0 // 一直显示
-      })
-      try {
-        // 提交登录参数
-        const res = await apiGetLogin(this.use)
-        // 保存用户的token
-        localset('heima_token', res.data.jwt)
-        // 将得到用户的信息中的头像地址拼接完整
-        res.data.user.avatar = 'http://localhost:1337' + res.data.user.avatar
-        // 保存用户信息到 vuex 中
-        this.$store.commit('setUserInfo', res.data.user)
-        // 提示登录成功
-        this.$toast.success('登录成功')
-        console.log(res)
-        // 跳转首页
-        this.$router.push('/home')
-      } catch (error) {
-        console.log(error)
       }
     }
   }

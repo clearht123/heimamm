@@ -8,6 +8,6 @@ export function localget (key) {
   return window.localStorage.getItem(key)
 }
 // 删除值
-export function localde (key) {
+export function localdel (key) {
   window.localStorage.removeItem(key)
 }

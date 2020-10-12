@@ -113,7 +113,7 @@ export default {
         // 提示登录成功
         this.$toast.success('登录成功')
         // 跳转到`首页`
-        this.$router.push('/home')
+        this.$router.push('/my')
       } catch (err) {
         console.log(err)
       }

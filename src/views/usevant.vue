@@ -25,7 +25,7 @@
         <van-icon name="shopping-cart" />
       </template>
     </van-cell>
-    <div class="box"><i class="iconfont iconicon_shangsheng"></i></div>
+    <div class="box1"><i class="iconfont iconicon_shangsheng"></i></div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {}
 </script>
 
 <style>
-.box {
+.box1 {
   width: 200px;
   height: 200px;
   background-color: pink;

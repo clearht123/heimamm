@@ -16,6 +16,14 @@ import 'amfe-flexible'
 import 'normalize.css'
 // 导入字体图标
 import './styles/iconfont.css'
+// 导入过滤器
+import dayjs from 'dayjs'
+
+Vue.filter('timeformat', function (value) {
+  // value:使用过滤器的数据
+  return dayjs(value).format('YYYY-MM-DD')
+})
+// 使用过滤器{{value ! 过滤名}}
 Vue.use(Vant)
 
 new Vue({
